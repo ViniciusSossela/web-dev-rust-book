@@ -445,15 +445,15 @@ pub fn lsp(string_digits: &str, span: usize) -> Result<u64, Error> {
 }
 ```
 
-Assim, com o resultado de `string_digits.matches(char::is_alphabetic).collect::<Vec<&str>>()` podemos obter o primeiro com `first`, e depois aplicar o `pop` para retirar o valor de `char`. Além disso, podemos perceber que a conta `string_digits.matches(char::is_alphabetic).collect::<Vec<&str>>()` está sendo executada duas vezes, assim podemos extrair para um valor, `v_alphanumeric`, antes dos ifs/elses:
+Assim, com o resultado de `string_digits.matches(char::is_alphabetic).collect::<Vec<&str>>()` podemos obter o primeiro com `first`, e depois aplicar o `pop` para retirar o valor de `char`. Além disso, podemos perceber que a conta `string_digits.matches(char::is_alphabetic).collect::<Vec<&str>>()` está sendo executada duas vezes, assim podemos extrair para um valor, `v_alphabetic`, antes dos ifs/elses:
 
 ```rust
 pub fn lsp(string_digits: &str, span: usize) -> Result<u64, Error> {
-    let v_alphanumeric = string_digits.matches(char::is_alphabetic).collect::<Vec<&str>>();
+    let v_alphabetic = string_digits.matches(char::is_alphabetic).collect::<Vec<&str>>();
     if span > string_digits.len() { return Err(Error::SpanTooLong); }
     else if span == 0 { return Ok(1u64); }
-    else if v_alphanumeric.len() > 0 {
-        return Err(Error::InvalidDigit(v_alphanumeric
+    else if v_alphabetic.len() > 0 {
+        return Err(Error::InvalidDigit(v_alphabetic
                 .first().unwrap()
                 .to_owned()
                 .to_string()
